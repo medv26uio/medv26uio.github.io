@@ -7,6 +7,53 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html, body { height: 100%; width: 100%; overflow: hidden; }
+
+    /* Warning overlay */
+    #warning-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      font-family: system-ui, sans-serif;
+    }
+    #warning-overlay.hidden { display: none; }
+    #warning-box {
+      background: #fff;
+      border-radius: 12px;
+      padding: 32px 36px;
+      max-width: 440px;
+      width: 90%;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+      text-align: center;
+    }
+    #warning-box h2 {
+      font-size: 1.4rem;
+      margin-bottom: 14px;
+      color: #1a1a1a;
+    }
+    #warning-box p {
+      font-size: 0.95rem;
+      color: #444;
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+    #warning-box button {
+      background: #1a73e8;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 32px;
+      font-size: 1rem;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.15s;
+    }
+    #warning-box button:hover { background: #1558b0; }
+
+    /* App iframe */
     iframe {
       display: block;
       width: 100%;
@@ -16,10 +63,41 @@
   </style>
 </head>
 <body>
+
+  <div id="warning-overlay">
+    <div id="warning-box">
+      <h2>&#128337; Unofficial Site</h2>
+      <p>
+        This is an <strong>unofficial</strong> platform for tracking ping pong
+        results at UiO. It is not affiliated with or endorsed by the University
+        of Oslo. Use at your own discretion — data accuracy is not guaranteed.
+      </p>
+      <button id="dismiss-btn">I understand, let me in</button>
+    </div>
+  </div>
+
   <iframe
-    src="https://script.google.com/macros/s/AKfycby_ERFvB6S1cgSkXnlm1k6A99MIyk86GFKrvTHQDWG-d8PxSDNjySaONeMleuKplQMx4Q/exec"
+    src="https://gas.medistudy.org"
     title="MedPong"
     allow="same-origin"
   ></iframe>
+
+  <script>
+    (function () {
+      var overlay = document.getElementById('warning-overlay');
+      var btn = document.getElementById('dismiss-btn');
+
+      // Show once per browser session
+      if (sessionStorage.getItem('warning-dismissed')) {
+        overlay.classList.add('hidden');
+      }
+
+      btn.addEventListener('click', function () {
+        overlay.classList.add('hidden');
+        sessionStorage.setItem('warning-dismissed', '1');
+      });
+    })();
+  </script>
+
 </body>
 </html>
