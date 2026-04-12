@@ -53,7 +53,6 @@
     }
     #warning-box button:hover { background: #1558b0; }
 
-    /* App iframe */
     iframe {
       display: block;
       width: 100%;
@@ -77,9 +76,8 @@
   </div>
 
   <iframe
-    src="https://gas.medistudy.org"
+    src="https://script.google.com/macros/s/AKfycby_ERFvB6S1cgSkXnlm1k6A99MIyk86GFKrvTHQDWG-d8PxSDNjySaONeMleuKplQMx4Q/exec"
     title="MedPong"
-    allow="same-origin"
   ></iframe>
 
   <script>
@@ -87,7 +85,6 @@
       var overlay = document.getElementById('warning-overlay');
       var btn = document.getElementById('dismiss-btn');
 
-      // Show once per browser session
       if (sessionStorage.getItem('warning-dismissed')) {
         overlay.classList.add('hidden');
       }
